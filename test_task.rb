@@ -26,7 +26,11 @@ class TestTask
   end
 
   def count_truthy
- 		count = values.count { |value| value[:password][value[:range]].include?(value[:letter]) }
+    count = values.count do |value|
+      repeat_amount = value[:password].split('').count { |p| p == value[:letter] }
+      value[:range].include?(repeat_amount)
+    end
+
     puts count
   end
 
@@ -34,8 +38,7 @@ class TestTask
 
   def to_range(str)
     # for example, 2-5, taking first and third element
-    # also deduct 1 from every element for proper indexes
-    str[0].to_i-1..str[2].to_i-1
+    str[0].to_i..str[2].to_i
   end
 end
 
